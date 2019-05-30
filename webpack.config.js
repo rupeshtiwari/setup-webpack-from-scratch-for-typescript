@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
 const DeclarationBundlerPlugin = require('./declaration-bundler-webpack-plugin.fix')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 /*
  * SplitChunksPlugin is enabled by default and replaced
  * deprecated CommonsChunkPlugin. It automatically identifies modules which
@@ -45,6 +46,7 @@ module.exports = {
 
     mode: 'development',
     plugins: [
+        new CleanWebpackPlugin(),
         new UglifyJSPlugin(),
         new DeclarationBundlerPlugin({
             moduleName: '"mylib"',
