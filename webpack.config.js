@@ -1,6 +1,6 @@
 const webpack = require('webpack')
 const path = require('path')
-
+const DeclarationBundlerPlugin = require('./declaration-bundler-webpack-plugin.fix')
 /*
  * SplitChunksPlugin is enabled by default and replaced
  * deprecated CommonsChunkPlugin. It automatically identifies modules which
@@ -44,7 +44,13 @@ module.exports = {
     },
 
     mode: 'development',
-    plugins: [new UglifyJSPlugin()],
+    plugins: [
+        new UglifyJSPlugin(),
+        new DeclarationBundlerPlugin({
+            moduleName: '"mylib"',
+            out: '@types/index.d.ts'
+        })
+    ],
     devtool: 'source-map',
     optimization: {
         splitChunks: {
