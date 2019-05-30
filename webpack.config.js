@@ -2,6 +2,7 @@ const webpack = require('webpack')
 const path = require('path')
 const DeclarationBundlerPlugin = require('./declaration-bundler-webpack-plugin.fix')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 /*
  * SplitChunksPlugin is enabled by default and replaced
  * deprecated CommonsChunkPlugin. It automatically identifies modules which
@@ -51,7 +52,13 @@ module.exports = {
         new DeclarationBundlerPlugin({
             moduleName: '"mylib"',
             out: '@types/index.d.ts'
-        })
+        }),
+        new CopyWebpackPlugin([
+            {
+                from: './src/package.json',
+                to: '../dist/package.json'
+            }
+        ])
     ],
     devtool: 'source-map',
     optimization: {
